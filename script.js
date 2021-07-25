@@ -9,25 +9,25 @@ function computerPlay(){
     return ROCK_PAPER_SCISSORS[computerChoice];
 }
 
-function playRound(playerSelection, computerSelection){
+function playRound(playerSelection, computerSelection, roundCount){
     if (playerSelection == computerSelection){
-        console.log(`Tie! You both selected ${normalizeOutputs(playerSelection)}`);
+        console.log(`Round ${roundCount+1}: Tie! You both selected ${normalizeOutputs(playerSelection)}`);
         return null;
     }
     else if (playerSelection == "rock" & computerSelection == "paper"){
-        console.log(`You Lose! ${normalizeOutputs(computerSelection)} beats ${normalizeOutputs(playerSelection)}`);
+        console.log(`Round ${roundCount+1}: You Lose! ${normalizeOutputs(computerSelection)} beats ${normalizeOutputs(playerSelection)}`);
         return false;
     }
     else if (playerSelection == "paper" & computerSelection == "scissors"){
-        console.log(`You Lose! ${normalizeOutputs(computerSelection)} beats ${normalizeOutputs(playerSelection)}`);
+        console.log(`Round ${roundCount+1}: You Lose! ${normalizeOutputs(computerSelection)} beats ${normalizeOutputs(playerSelection)}`);
         return false;   
     } 
     else if (playerSelection == "scissors" & computerSelection == "rock"){
-        console.log(`You Lose! ${normalizeOutputs(computerSelection)} beats ${normalizeOutputs(playerSelection)}`);
+        console.log(`Round ${roundCount+1}: You Lose! ${normalizeOutputs(computerSelection)} beats ${normalizeOutputs(playerSelection)}`);
         return false;     
     } 
     else {
-        console.log(`You Win! ${normalizeOutputs(playerSelection)} beats ${normalizeOutputs(computerSelection)}`);      
+        console.log(`Round ${roundCount+1}: You Win! ${normalizeOutputs(playerSelection)} beats ${normalizeOutputs(computerSelection)}`);      
         return  true;
     }
 }
@@ -36,10 +36,10 @@ function game(){
     let playerPoints = 0;
     let computerPoints = 0;
     let playerWonRound;
-    for(let i = 0; i<5; i++){
-        const playerSelection = prompt("Choose a move!");
+    for(let roundCount = 0; roundCount<5; roundCount++){
+        const playerSelection = prompt("Choose a move!").toLowerCase();
         const computerSelection = computerPlay();
-        playerWonRound = playRound(playerSelection.toLowerCase(), computerSelection);
+        playerWonRound = playRound(playerSelection, computerSelection, roundCount);
         if(playerWonRound == true){
             playerPoints++;
         }
