@@ -33,6 +33,7 @@ function playRound(playerSelection, computerSelection){
     }
 }
 function playGame(e){
+    e.stopPropagation();
     const playerSelection = e.target.innerText;
     const computerSelection = computerPlay();
     playRound(playerSelection, computerSelection);
@@ -70,8 +71,8 @@ let roundCount = 1;
 let playerPoints = 0;
 let computerPoints = 0;
 
-document.getElementById("rock").addEventListener('click',playGame);
-document.getElementById("paper").addEventListener('click',playGame);
-document.getElementById("scissors").addEventListener('click',playGame);
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach(button => button.addEventListener('click', playGame));
 document.getElementById("reset").addEventListener('click',reset);
 
