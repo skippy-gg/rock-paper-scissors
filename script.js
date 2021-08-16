@@ -1,63 +1,77 @@
-const ROCK_PAPER_SCISSORS = ["rock", "paper", "scissors"];
-
-function normalizeOutputs(outputToNormalize){
-    return (outputToNormalize.charAt(0)).toUpperCase()+outputToNormalize.substring(1);
-}
+const ROCK_PAPER_SCISSORS = ["Rock", "Paper", "Scissors"];
 
 function computerPlay(){
     let computerChoice = Math.floor(Math.random()*3);
     return ROCK_PAPER_SCISSORS[computerChoice];
 }
 
-function playRound(playerSelection, computerSelection, roundCount){
+function playRound(playerSelection, computerSelection){
+    const roundResult = document.getElementById('round-result');
     if (playerSelection == computerSelection){
-        console.log(`Round ${roundCount+1}: Tie! You both selected ${normalizeOutputs(playerSelection)}`);
-        return null;
+        roundResult.textContent = `Tie! You both selected ${playerSelection}`;
+        return;
     }
-    else if (playerSelection == "rock" & computerSelection == "paper"){
-        console.log(`Round ${roundCount+1}: You Lose! ${normalizeOutputs(computerSelection)} beats ${normalizeOutputs(playerSelection)}`);
-        return false;
+    else if (playerSelection == "Rock" & computerSelection == "Paper"){
+        roundResult.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
+        computerPoints += 1
+        return;
     }
-    else if (playerSelection == "paper" & computerSelection == "scissors"){
-        console.log(`Round ${roundCount+1}: You Lose! ${normalizeOutputs(computerSelection)} beats ${normalizeOutputs(playerSelection)}`);
-        return false;   
+    else if (playerSelection == "Paper" & computerSelection == "Scissors"){
+        roundResult.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
+        computerPoints += 1
+        return;   
     } 
-    else if (playerSelection == "scissors" & computerSelection == "rock"){
-        console.log(`Round ${roundCount+1}: You Lose! ${normalizeOutputs(computerSelection)} beats ${normalizeOutputs(playerSelection)}`);
-        return false;     
+    else if (playerSelection == "Scissors" & computerSelection == "Rock"){
+        roundResult.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`;
+        computerPoints += 1
+        return;     
     } 
     else {
-        console.log(`Round ${roundCount+1}: You Win! ${normalizeOutputs(playerSelection)} beats ${normalizeOutputs(computerSelection)}`);      
-        return  true;
+        roundResult.textContent = `You Win! ${playerSelection} beats ${computerSelection}`;
+        playerPoints += 1      
+        return;
+    }
+}
+function playGame(e){
+    const playerSelection = e.target.innerText;
+    const computerSelection = computerPlay();
+    playRound(playerSelection, computerSelection);
+    updateScore();
+    roundCount += 1;
+}
+
+function updateScore(){
+    const playerScore = document.getElementById("player-score");
+    const computerScore = document.getElementById("computer-score");
+    playerScore.textContent = `You: ${playerPoints}`;
+    computerScore.textContent = `Computer: ${computerPoints}`;
+    displayWinner(playerScore, computerScore);
+}
+
+function reset(){
+    roundcount = 0;
+    playerPoints = 0;
+    computerPoints = 0;
+    updateScore();
+    document.getElementById("round-result").textContent = "Select a move to start the game!";
+    document.getElementById("winner-text").textContent = "Win 5 rounds to win the game!";
+}
+
+function displayWinner(){
+    if (playerPoints == 5){
+        document.getElementById("winner-text").innerHTML = "<strong>Congratulations! You won... Click Reset to play again!</strong>";
+    }
+    else if (computerPoints == 5){
+        document.getElementById("winner-text").innerHTML = "<strong>Oof! You lost... Click Reset to play again!</strong>";
     }
 }
 
-function game(){
-    let playerPoints = 0;
-    let computerPoints = 0;
-    let playerWonRound;
-    for(let roundCount = 0; roundCount<5; roundCount++){
-        const playerSelection = prompt("Choose a move!").toLowerCase();
-        const computerSelection = computerPlay();
-        playerWonRound = playRound(playerSelection, computerSelection, roundCount);
-        if(playerWonRound == true){
-            playerPoints++;
-        }
-        else if (playerWonRound == false){
-            computerPoints++;
-        }
-    }
-    if (playerPoints > computerPoints){
-        console.log(`Wow! You beat the computer ${playerPoints} to ${computerPoints}`)
-    }
-    else{
-        console.log(`The computer beat you ${computerPoints} to ${playerPoints}...`)
-    }
-    console.log("Would you like to play again?")
-    const playAgain = prompt("Enter Y to play again or N to exit the game!").toUpperCase();
-    if (playAgain == "Y"){
-        game();
-    }
-}
+let roundCount = 1;
+let playerPoints = 0;
+let computerPoints = 0;
 
-game();
+document.getElementById("rock").addEventListener('click',playGame);
+document.getElementById("paper").addEventListener('click',playGame);
+document.getElementById("scissors").addEventListener('click',playGame);
+document.getElementById("reset").addEventListener('click',reset);
+

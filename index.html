@@ -3,15 +3,42 @@
 
 <head>
 <link href="style.css">
+<script src="script.js" defer></script>
 </head>
 
 <body>
     <nav>
 
     </nav>
+
+
     <main>
-        <script src="script.js"></script>
+        <div class = "container">
+            <div class = "heading">
+                <h1>Rock, Paper, Scissors!</h1>
+            </div>
+            <div class = "game-info">
+                <div class= "result">
+                    <p id = 'round-result'>Select a move to start the game!</p>
+                </div>
+                <div class= "score">
+                    <p id ="player-score">You: 0</p>
+                    <p id ="computer-score">Computer: 0</p>
+                </div>
+            </div>
+            <div class = "buttons">
+                <button type="button" id="rock">Rock</button>
+                <button type="button" id="paper">Paper</button>
+                <button type="button" id="scissors">Scissors</button>
+                <button type="button" id="reset">Reset</button>
+            </div>
+            <div class = "winner">
+                <p id="winner-text">Win 5 rounds to win the game!</p>
+            </div>
+        </div>
     </main>
+
+
     <footer>
 
     </footer>
